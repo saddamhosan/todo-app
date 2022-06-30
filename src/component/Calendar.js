@@ -3,6 +3,7 @@ import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { useNavigate } from 'react-router-dom';
+import Swal from "sweetalert2";
 
 const Calendar = () => {
     const navigate=useNavigate()
@@ -17,7 +18,7 @@ const Calendar = () => {
       task,
       completed: false,
     };
-    fetch("http://localhost:5000/task",{
+    fetch("https://secure-harbor-66857.herokuapp.com/task",{
         method:"POST",
         headers:{
             "content-type":"application/json",
@@ -25,17 +26,24 @@ const Calendar = () => {
         body:JSON.stringify(newTask)
     }).then(res=>res.json()).then(data=>{
         if(data.insertedId){
+            Swal.fire({
+              position: "top-center",
+              icon: "success",
+              title: "Added a new Task",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             e.target.reset()
             navigate('/')
         }
     })
   };
   return (
-    <div class="hero ">
-      <div class="hero-content flex-col lg:flex-row">
+    <div className="hero ">
+      <div className="hero-content flex-col lg:flex-row">
         <DayPicker mode="single" selected={selected} onSelect={setSelected} />
         <div>
-          <h1 class="text-3xl text-center font-bold">Add a new task</h1>
+          <h1 className="text-3xl text-center font-bold">Add a new task</h1>
           <form onSubmit={handleSubmit}>
             <input
               className="text-center w-full mt-4 text-2xl font-bold"

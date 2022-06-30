@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 const Completed = () => {
     const [completedTask, setCompletedTask] = useState([]);
     useEffect(() => {
-      fetch("http://localhost:5000/completed")
+      fetch("https://secure-harbor-66857.herokuapp.com/completed")
         .then((res) => res.json())
         .then((data) => setCompletedTask(data));
     }, [completedTask]);
     return (
       <div>
         <h1 className="text-center text-2xl font-bold">All Completed Task</h1>
-        <div class="overflow-x-auto">
-          <table class="table w-full">
+        <div className="overflow-x-auto">
+          <table className="table w-full my-6">
             <thead>
               <tr>
                 <th>Completed</th>

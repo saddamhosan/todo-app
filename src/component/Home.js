@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
+import Swal from "sweetalert2";
 import Calendar from "./Calendar";
 
 const Home = () => {
     const navigate=useNavigate()
   const [allTask, setAllTask] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/task")
+    fetch("https://secure-harbor-66857.herokuapp.com/task")
       .then((res) => res.json())
       .then((data) => setAllTask(data));
   }, [allTask]);
@@ -17,7 +18,7 @@ const Home = () => {
   }
   const handleCompleted=(id)=>{
 console.log(id);
-fetch(`http://localhost:5000/completed/${id}`, {
+fetch(`https://secure-harbor-66857.herokuapp.com/completed/${id}`, {
   method: "put",
   headers: {
     "content-type": "application/json",
@@ -26,7 +27,14 @@ fetch(`http://localhost:5000/completed/${id}`, {
   .then((res) => res.json())
   .then((data) => {
     if(data.modifiedCount){
-        alert("the task is completed")
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Task is completed",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+       
     }
   });
   }
@@ -34,8 +42,8 @@ fetch(`http://localhost:5000/completed/${id}`, {
     <div className="mb-10">
         <Calendar/>
       <h1 className="text-center text-2xl font-bold">All Task</h1>
-      <div class="overflow-x-auto">
-        <table class="table w-full">
+      <div className="overflow-x-auto">
+        <table className="table w-full">
           <thead>
             <tr>
               <th>

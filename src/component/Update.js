@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "react-day-picker/dist/style.css";
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from "sweetalert2";
 
 const Update = () => {
     const navigate=useNavigate()
@@ -9,7 +10,7 @@ const Update = () => {
     const { date, task } = updateTask;
     console.log(task);
     useEffect(()=>{
-        fetch(`http://localhost:5000/task/${id}`)
+        fetch(`https://secure-harbor-66857.herokuapp.com/task/${id}`)
           .then((res) => res.json())
           .then((data) => setUpdateTask(data));
     },[id])
@@ -19,7 +20,7 @@ const Update = () => {
       e.preventDefault();
       const task = e.target.task.value;
       
-      fetch(`http://localhost:5000/task/${id}`, {
+      fetch(`https://secure-harbor-66857.herokuapp.com/task/${id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",
@@ -29,13 +30,20 @@ const Update = () => {
         .then((res) => res.json())
         .then((data) =>{
             if(data.modifiedCount){
+                Swal.fire({
+                  position: "top-center",
+                  icon: "success",
+                  title: "Task is Updated",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
                 navigate('/')
             }
         });
     };
     return (
       <div className="w-1/2 mx-auto">
-        <h1 class="text-3xl text-center font-bold">update task</h1>
+        <h1 className="text-3xl text-center font-bold">update task</h1>
         <form onSubmit={handleUpdate}>
           <input
             className="text-center w-full mt-4 text-2xl font-bold"
