@@ -30,7 +30,6 @@ const Calendar = () => {
     <div class="hero min-h-[80vh]">
       <div class="hero-content flex-col lg:flex-row">
         <DayPicker mode="single" selected={selected} onSelect={setSelected} />
-        {/* <p>you have selected: {format(selected, "PP")}</p> */}
         <div>
           <h1 class="text-3xl text-center font-bold">Add a new task</h1>
           <form onSubmit={handleSubmit}>
