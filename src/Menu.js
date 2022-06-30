@@ -26,13 +26,13 @@ const Menu = () => {
               class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="/calendar">Calendar</NavLink>
+                <NavLink to="/">To-Do</NavLink>
               </li>
               <li>
                 <NavLink to="/completed">Completed</NavLink>
+              </li>
+              <li>
+                <NavLink to="/calendars">Calendar</NavLink>
               </li>
             </ul>
           </div>
@@ -43,13 +43,13 @@ const Menu = () => {
         <div class="navbar-end hidden lg:flex">
           <ul class="menu menu-horizontal p-0">
             <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/calendar">Calendar</NavLink>
+              <NavLink to="/">To-Do</NavLink>
             </li>
             <li>
               <NavLink to="/completed">Completed</NavLink>
+            </li>
+            <li>
+              <NavLink to="/calendars">Calendar</NavLink>
             </li>
           </ul>
         </div>

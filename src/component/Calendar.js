@@ -2,8 +2,10 @@ import { format } from "date-fns";
 import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
+import { useNavigate } from 'react-router-dom';
 
 const Calendar = () => {
+    const navigate=useNavigate()
   const [selected, setSelected] = useState(new Date());
 
   const handleSubmit = (e) => {
@@ -13,6 +15,7 @@ const Calendar = () => {
     const newTask = {
       date,
       task,
+      completed: false,
     };
     fetch("http://localhost:5000/task",{
         method:"POST",
@@ -23,11 +26,12 @@ const Calendar = () => {
     }).then(res=>res.json()).then(data=>{
         if(data.insertedId){
             e.target.reset()
+            navigate('/')
         }
     })
   };
   return (
-    <div class="hero min-h-[80vh]">
+    <div class="hero ">
       <div class="hero-content flex-col lg:flex-row">
         <DayPicker mode="single" selected={selected} onSelect={setSelected} />
         <div>

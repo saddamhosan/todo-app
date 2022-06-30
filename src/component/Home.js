@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
+import Calendar from "./Calendar";
 
 const Home = () => {
     const navigate=useNavigate()
@@ -9,14 +10,30 @@ const Home = () => {
     fetch("http://localhost:5000/task")
       .then((res) => res.json())
       .then((data) => setAllTask(data));
-  }, []);
+  }, [allTask]);
 
   const handleUpdate=(id)=>{
     navigate(`update/${id}`)
   }
+  const handleCompleted=(id)=>{
+console.log(id);
+fetch(`http://localhost:5000/completed/${id}`, {
+  method: "put",
+  headers: {
+    "content-type": "application/json",
+  },
+})
+  .then((res) => res.json())
+  .then((data) => {
+    if(data.modifiedCount){
+        alert("the task is completed")
+    }
+  });
+  }
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="mb-10">
+        <Calendar/>
+      <h1 className="text-center text-2xl font-bold">All Task</h1>
       <div class="overflow-x-auto">
         <table class="table w-full">
           <thead>
@@ -35,11 +52,14 @@ const Home = () => {
               return (
                 <tr key={_id}>
                   <th>
-                    <input type="checkbox" name="" id="" />
+                    <input onClick={()=>handleCompleted(_id)} type="checkbox" name="" id="" />
                   </th>
                   <td>{date}</td>
                   <td>{task}</td>
-                  <td onClick={()=>handleUpdate(_id)} className="text-blue-500 text-2xl cursor-pointer">
+                  <td
+                    onClick={() => handleUpdate(_id)}
+                    className="text-blue-500 text-2xl cursor-pointer"
+                  >
                     <AiOutlineEdit />
                   </td>
                 </tr>
